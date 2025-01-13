@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokedex</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Pokedex</h1>
+        <p>Welcome to the Pokedex! Discover your favorite Pokemon.</p>
+    </header>
+    <main>
+        <section id="search">
+            <h2>Search Pokemon</h2>
+            <form action="/get_pokemon" method="POST">
+                <label for="pokemon_name">Pokemon Name:</label>
+                <input type="text" id="pokemon_name" name="pokemon_name" required>
+                <button type="submit">Search</button>
+            </form>
+        </section>
+        <section id="pokemon-details">
+            <h2>Pokemon Details</h2>
+            {% if meme_pic %}
+            <div id="details">
+                <img src="{{ meme_pic }}" alt="{{ subreddit }}" class="pokemon-image">
+                <p class="pokemon-name">{{ subreddit }}</p>
+            </div>
+            {% else %}
+            <p>No Pokemon details to display.</p>
+            {% endif %}
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 Pokedex Project</p>
+    </footer>
+</body>
+</html>
