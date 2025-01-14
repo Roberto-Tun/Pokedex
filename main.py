@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request
 import requests, json
 
+
+# function that takes the name of the pokemon and returns the raw data of the pokemon
 def get_pokemon_data(PokemonName):
     base_url = "https://pokeapi.co/api/v2/pokemon/"
     url = base_url + PokemonName
@@ -10,9 +12,16 @@ def get_pokemon_data(PokemonName):
     else:
         return None
 
-def pokemon_image_url(PokemonName):
-    pokemon_info = get_pokemon_data(PokemonName)
-    return pokemon_info['sprites']['front_default']
+# function that takes the name of the pokemon and returns the image url, name, type, weight, height and description of the pokemon
+def pokemon_display_data(PokemonName):
+    pokemon_info = get_pokemon_data(PokemonName) # get the raw data of the pokemon
+    pokemon_img_url = pokemon_info['sprites']['front_default']
+    pokemon_name = pokemon_info['name']
+    pokemon_type = pokemon_info['types'][0]['type']['name']
+    pokemon_weight = pokemon_info['weight']
+    pokemon_height = pokemon_info['height']
+    pokemon_description = pokemon_info['species']['url']
+    return pokemon_img_url, pokemon_name, pokemon_type, pokemon_weight, pokemon_height, pokemon_description
 
 
 app = Flask(__name__)
@@ -20,15 +29,13 @@ app = Flask(__name__)
 
 @app.route('/get_pokemon', methods=['POST'])
 def get_pokemon():
-    pokemon_name = request.form['pokemon_name']
-    pokemon_info = get_pokemon_data(pokemon_name)
-    pokemon_image_url = pokemon_info['sprites']['front_default']
-    return render_template('index.html', pokemon_pic=pokemon_image_url, pokemon_name=pokemon_info['name'])
+    pokemon_search = request.form['pokemon_name']
+    pokemon_img_url, pokemon_name, pokemon_type, pokemon_weight, pokemon_height, pokemon_description = pokemon_display_data(pokemon_search)
+    return render_template('index.html', pokemon_pic=pokemon_img_url, pokemon_name=pokemon_name, pokemon_type=pokemon_type, pokemon_weight=pokemon_weight, pokemon_height=pokemon_height, pokemon_description=pokemon_description)
 
 @app.route('/')
 def index():
-    pokemon_info = get_pokemon_data("pikachu")
-    pokemon_image_url = pokemon_info['sprites']['front_default']
-    return render_template('index.html', pokemon_pic=pokemon_image_url, pokemon_name=pokemon_info['name'])
+    pokemon_img_url, pokemon_name, pokemon_type, pokemon_weight, pokemon_height, pokemon_description = pokemon_display_data('pikachu')
+    return render_template('index.html', pokemon_pic=pokemon_img_url, pokemon_name=pokemon_name, pokemon_type=pokemon_type, pokemon_weight=pokemon_weight, pokemon_height=pokemon_height, pokemon_description=pokemon_description)
 
 app.run(port=5000)
