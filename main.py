@@ -23,12 +23,12 @@ def get_pokemon():
     pokemon_name = request.form['pokemon_name']
     pokemon_info = get_pokemon_data(pokemon_name)
     pokemon_image_url = pokemon_info['sprites']['front_default']
-    return render_template('index.html', meme_pic=pokemon_image_url, subreddit=pokemon_info['name'])
+    return render_template('index.html', pokemon_pic=pokemon_image_url, pokemon_name=pokemon_info['name'])
 
 @app.route('/')
 def index():
     pokemon_info = get_pokemon_data("pikachu")
     pokemon_image_url = pokemon_info['sprites']['front_default']
-    return render_template('index.html', meme_pic=pokemon_image_url, subreddit=pokemon_info['name'])
+    return render_template('index.html', pokemon_pic=pokemon_image_url, pokemon_name=pokemon_info['name'])
 
 app.run(port=5000)
