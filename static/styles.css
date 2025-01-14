@@ -6,7 +6,9 @@
 
 
 @media all {
-
+	div#inputContainer {
+		z-index: 10; /* Ensures it appears above other elements */
+	  }
 	div#pokedex
 	{
 		width: 750px;
@@ -892,49 +894,53 @@
 		background: -o-radial-gradient(#0abd0a, #057b05);
 	}
 
-	div#yellowBox1
-	{
-		width: 140px;
-		height: 70px;
-		z-index: 1;
-		background-color: #ffff00;
-
+	/* Input container adjustments */
+	div#inputContainer {
+		width: 280px;
+		height: 50px;
 		position: absolute;
-		top: 415px;
-		left: 25px;
-
-		border-radius: 15px;
-		-webkit-border-radius: 15px;
-		-moz-border-radius: 15px;
-		-o-border-radius: 15px;
-
-		box-shadow: 0 0 20px #ff6600 inset;
-		-webkit-box-shadow: 0 0 20px #ff6600 inset;
-		-moz-box-shadow: 0 0 20px #ff6600 inset;
-		-o-box-shadow: 0 0 20px #ff6600 inset;
+		top: 415px; /* Adjust this to match the design */
+		left: 25px; /* Adjust if needed */
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		z-index: 10; /* Ensure it's above other elements */
 	}
-
-	div#yellowBox2
-	{
-		width: 140px;
-		height: 70px;
-		z-index: 1;
-		background-color: #ffff00;
-
-		position: absolute;
-		top: 415px;
-		left: 185px;
-
-		border-radius: 15px;
-		-webkit-border-radius: 15px;
-		-moz-border-radius: 15px;
-		-o-border-radius: 15px;
-
-		box-shadow: 0 0 20px #ff6600 inset;
-		-webkit-box-shadow: 0 0 20px #ff6600 inset;
-		-moz-box-shadow: 0 0 20px #ff6600 inset;
-		-o-box-shadow: 0 0 20px #ff6600 inset;
+	
+	/* Input field styles */
+	input#inputField {
+		flex: 1;
+		height: 40px;
+		padding: 5px 10px;
+		font-size: 14px;
+		border: 2px solid #5e5e5e;
+		border-radius: 10px;
+		outline: none;
+		background-color: #fff; /* Ensure background is visible */
+		color: #000; /* Ensure text color is readable */
 	}
+	
+	/* Button styles */
+	button#submitButton {
+		height: 40px;
+		padding: 0 15px;
+		background-color: #ff6505;
+		border: none;
+		color: white;
+		font-size: 14px;
+		font-weight: bold;
+		border-radius: 10px;
+		cursor: pointer;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+		transition: all 0.2s ease-in-out;
+	}
+	
+	/* Button hover effect */
+	button#submitButton:hover {
+		background-color: #e65504;
+		transform: scale(1.05);
+	}
+	
 
 }
 
