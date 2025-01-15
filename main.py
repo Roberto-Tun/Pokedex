@@ -1,6 +1,8 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session
 import requests, json, random
 
+app = Flask(__name__)
+app.secret_key = '12312asdas5'
 
 # function that takes the name of the pokemon and returns the raw data of the pokemon
 def get_pokemon_data(PokemonName):
@@ -22,30 +24,41 @@ def pokemon_display_data(PokemonName):
     pokemon_height = pokemon_info['height']
     return pokemon_img_url, pokemon_name, pokemon_type, pokemon_weight, pokemon_height
 
-# Flask app
-app = Flask(__name__)
 
-
-@app.route('/get_pokemon', methods=['POST'])
+@app.route('/check_pokemon', methods=['POST'])
 def get_pokemon():
 
+    # the action is taken from the form in the index.html to determine if the user wants to guess or skip the pokemon
     action = request.form['action']
 
+    # the pokemon_search is taken from the form in the index.html to determine if the user's guess is correct
+    pokemon_search = request.form['pokemon_name']
+
+    # if the user's guess is correct, the score is incremented by 1 and a new random pokemon is displayed
     if action == 'guess':
-        pokemon_search = request.form['pokemon_name']
-        pokemon_img_url, pokemon_name, pokemon_type, pokemon_weight, pokemon_height = pokemon_display_data(pokemon_search)
-        return render_template('index.html', pokemon_pic=pokemon_img_url, pokemon_name=pokemon_name, pokemon_type=pokemon_type, pokemon_weight=pokemon_weight, pokemon_height=pokemon_height,)
+        if pokemon_search.lower() != session['current_pokemon']:
+            return None
+        else:
+            session['score'] += 1
+            random_pokemon = random.randint(1, 1025)
+            pokemon_img_url, pokemon_name, pokemon_type, pokemon_weight, pokemon_height = pokemon_display_data(str(random_pokemon))
+            session['current_pokemon'] = pokemon_name
+            return render_template('index.html', pokemon_pic=pokemon_img_url, pokemon_name=pokemon_name, pokemon_type=pokemon_type, pokemon_weight=pokemon_weight, pokemon_height=pokemon_height)
     
-
-
-    #pokemon_search = request.form['pokemon_name']
-    #pokemon_img_url, pokemon_name, pokemon_type, pokemon_weight, pokemon_height = pokemon_display_data(pokemon_search)
-    #return render_template('index.html', pokemon_pic=pokemon_img_url, pokemon_name=pokemon_name, pokemon_type=pokemon_type, pokemon_weight=pokemon_weight, pokemon_height=pokemon_height,)
+    # if the user wants to skip the pokemon, a new random pokemon is displayed
+    elif action == 'skip':
+        random_pokemon = random.randint(1, 1025)
+        pokemon_img_url, pokemon_name, pokemon_type, pokemon_weight, pokemon_height = pokemon_display_data(str(random_pokemon))
+        session['current_pokemon'] = pokemon_name
+        return render_template('index.html', pokemon_pic=pokemon_img_url, pokemon_name=pokemon_name, pokemon_type=pokemon_type, pokemon_weight=pokemon_weight, pokemon_height=pokemon_height)
 
 @app.route('/')
 def index():
     random_pokemon = random.randint(1, 1025)
     pokemon_img_url, pokemon_name, pokemon_type, pokemon_weight, pokemon_height = pokemon_display_data(str(random_pokemon))
-    return render_template('index.html', pokemon_pic=pokemon_img_url, pokemon_name=pokemon_name, pokemon_type=pokemon_type, pokemon_weight=pokemon_weight, pokemon_height=pokemon_height,)
+    session['current_pokemon'] = pokemon_name
+    session['score'] = 0
+    return render_template('index.html', pokemon_pic=pokemon_img_url, pokemon_name=pokemon_name, pokemon_type=pokemon_type, pokemon_weight=pokemon_weight, pokemon_height=pokemon_height)
 
-app.run(port=5000)
+if __name__ == '__main__':
+    app.run(port=5000)
