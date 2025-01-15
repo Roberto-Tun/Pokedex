@@ -3,11 +3,26 @@
 	padding: 0;
 }
 
+.bebas-neue-regular {
+	font-family: "Bebas Neue", serif;
+	font-weight: 400;
+	font-style: normal;
+  }
+  
 
 
 @media all {
 	div#inputContainer {
-		z-index: 10; /* Ensures it appears above other elements */
+		display: flex;
+		justify-content: space-between; /* Space between input and buttons */
+		align-items: center; /* Align vertically */
+		width: 90%; /* Adjust to fit within the parent container */
+		margin: 0 auto; /* Center horizontally */
+		position: absolute;
+		bottom: 20px; /* Adjust positioning relative to Pokedex */
+		left: 5%;
+		right: 5%;
+		z-index: 10; /* Ensure it stays on top */
 	  }
 	div#pokedex
 	{
@@ -303,6 +318,7 @@
 	{
 		display: block;
 		margin: 0 auto;
+		filter: brightness(0%)
 	}
 
 	div#topPicture
@@ -728,8 +744,8 @@
 		padding: 10px;
 		background-color: #30da0c;
 		z-index: 1;
-		font-size: 13px;
-		font-family: arial, sans-serif;
+		font-size: 20px;
+		font-family:"Bebas Neue", serif;
 
 		position: absolute;
 		top: 130px;
@@ -894,36 +910,26 @@
 		background: -o-radial-gradient(#0abd0a, #057b05);
 	}
 
-	/* Input container adjustments */
-	div#inputContainer {
-		width: 280px;
-		height: 50px;
-		position: absolute;
-		top: 415px; /* Adjust this to match the design */
-		left: 25px; /* Adjust if needed */
-		display: flex;
-		align-items: center;
-		gap: 10px;
-		z-index: 10; /* Ensure it's above other elements */
+	#pokemonForm{
+		width: 100%;
 	}
 	
 	/* Input field styles */
 	input#inputField {
-		flex: 1;
+		flex: 3; /* Take more space compared to buttons */
 		height: 40px;
 		padding: 5px 10px;
 		font-size: 14px;
 		border: 2px solid #5e5e5e;
 		border-radius: 10px;
 		outline: none;
-		background-color: #fff; /* Ensure background is visible */
-		color: #000; /* Ensure text color is readable */
+		background-color: #fff;
 	}
 	
 	/* Button styles */
-	button#submitButton {
+	button#submitButton, button#resetButton {
+		flex: 1; /* Equal space for both buttons */
 		height: 40px;
-		padding: 0 15px;
 		background-color: #ff6505;
 		border: none;
 		color: white;
@@ -935,13 +941,29 @@
 		transition: all 0.2s ease-in-out;
 	}
 	
-	/* Button hover effect */
-	button#submitButton:hover {
-		background-color: #e65504;
-		transform: scale(1.05);
+	/* Ensure buttons have some space between them */
+	button#submitButton {
+		padding-left: 5px;
+		padding-right: 5px;
+		margin-left: 5px;
+		background-color: #ff6505;
 	}
 	
-
+	button#resetButton {
+		padding-left: 5px;
+		padding-right: 5px;
+		margin-left: 5px;
+		background-color: #5e5e5e;
+	}
+	
+	/* Hover effect for buttons */
+	button#submitButton:hover {
+		background-color: #e65504;
+	}
+	
+	button#resetButton:hover {
+		background-color: #444;
+	}
 }
 
 @media handheld and (orientation:portrait), (max-width:768px) {

@@ -20,8 +20,7 @@ def pokemon_display_data(PokemonName):
     pokemon_type = pokemon_info['types'][0]['type']['name']
     pokemon_weight = pokemon_info['weight']
     pokemon_height = pokemon_info['height']
-    pokemon_description = pokemon_info['species']['url']
-    return pokemon_img_url, pokemon_name, pokemon_type, pokemon_weight, pokemon_height, pokemon_description
+    return pokemon_img_url, pokemon_name, pokemon_type, pokemon_weight, pokemon_height
 
 
 app = Flask(__name__)
@@ -30,12 +29,12 @@ app = Flask(__name__)
 @app.route('/get_pokemon', methods=['POST'])
 def get_pokemon():
     pokemon_search = request.form['pokemon_name']
-    pokemon_img_url, pokemon_name, pokemon_type, pokemon_weight, pokemon_height, pokemon_description = pokemon_display_data(pokemon_search)
-    return render_template('index.html', pokemon_pic=pokemon_img_url, pokemon_name=pokemon_name, pokemon_type=pokemon_type, pokemon_weight=pokemon_weight, pokemon_height=pokemon_height, pokemon_description=pokemon_description)
+    pokemon_img_url, pokemon_name, pokemon_type, pokemon_weight, pokemon_height = pokemon_display_data(pokemon_search)
+    return render_template('index.html', pokemon_pic=pokemon_img_url, pokemon_name=pokemon_name, pokemon_type=pokemon_type, pokemon_weight=pokemon_weight, pokemon_height=pokemon_height,)
 
 @app.route('/')
 def index():
-    pokemon_img_url, pokemon_name, pokemon_type, pokemon_weight, pokemon_height, pokemon_description = pokemon_display_data('pikachu')
-    return render_template('index.html', pokemon_pic=pokemon_img_url, pokemon_name=pokemon_name, pokemon_type=pokemon_type, pokemon_weight=pokemon_weight, pokemon_height=pokemon_height, pokemon_description=pokemon_description)
+    pokemon_img_url, pokemon_name, pokemon_type, pokemon_weight, pokemon_height = pokemon_display_data('pikachu')
+    return render_template('index.html', pokemon_pic=pokemon_img_url, pokemon_name=pokemon_name, pokemon_type=pokemon_type, pokemon_weight=pokemon_weight, pokemon_height=pokemon_height,)
 
 app.run(port=5000)
