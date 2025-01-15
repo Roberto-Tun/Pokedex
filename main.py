@@ -43,14 +43,14 @@ def get_pokemon():
             random_pokemon = random.randint(1, 1025)
             pokemon_img_url, pokemon_name, pokemon_type, pokemon_weight, pokemon_height = pokemon_display_data(str(random_pokemon))
             session['current_pokemon'] = pokemon_name
-            return render_template('index.html', pokemon_pic=pokemon_img_url, pokemon_name=pokemon_name, pokemon_type=pokemon_type, pokemon_weight=pokemon_weight, pokemon_height=pokemon_height)
+            return render_template('index.html', pokemon_pic=pokemon_img_url, pokemon_name=pokemon_name, pokemon_type=pokemon_type, pokemon_weight=pokemon_weight, pokemon_height=pokemon_height, score=session['score'])
     
     # if the user wants to skip the pokemon, a new random pokemon is displayed
     elif action == 'skip':
         random_pokemon = random.randint(1, 1025)
         pokemon_img_url, pokemon_name, pokemon_type, pokemon_weight, pokemon_height = pokemon_display_data(str(random_pokemon))
         session['current_pokemon'] = pokemon_name
-        return render_template('index.html', pokemon_pic=pokemon_img_url, pokemon_name=pokemon_name, pokemon_type=pokemon_type, pokemon_weight=pokemon_weight, pokemon_height=pokemon_height)
+        return render_template('index.html', pokemon_pic=pokemon_img_url, pokemon_name=pokemon_name, pokemon_type=pokemon_type, pokemon_weight=pokemon_weight, pokemon_height=pokemon_height, score=session['score'])
 
 @app.route('/')
 def index():
@@ -58,7 +58,7 @@ def index():
     pokemon_img_url, pokemon_name, pokemon_type, pokemon_weight, pokemon_height = pokemon_display_data(str(random_pokemon))
     session['current_pokemon'] = pokemon_name
     session['score'] = 0
-    return render_template('index.html', pokemon_pic=pokemon_img_url, pokemon_name=pokemon_name, pokemon_type=pokemon_type, pokemon_weight=pokemon_weight, pokemon_height=pokemon_height)
+    return render_template('index.html', pokemon_pic=pokemon_img_url, pokemon_name=pokemon_name, pokemon_type=pokemon_type, pokemon_weight=pokemon_weight, pokemon_height=pokemon_height, score=session['score'])
 
 if __name__ == '__main__':
     app.run(port=5000)
